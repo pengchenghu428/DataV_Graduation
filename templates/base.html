@@ -1,39 +1,39 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}Flasky{% endblock %}
-
-{% block head %}
-{{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-png">
-<link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-png">
+{% block meta %}
+    {{ super() }}
+    <meta name="description" content="">
+    <meta name="author" content="pengchenghu">
 {% endblock %}
 
-{% block navbar %}
-<div class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Flasky</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Nation</a></li>
-                <li><a href="/">Type</a></li>
-                <li><a href="/">Province</a></li>
-                <li><a href="/">Company</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+{% block head %}
+    {{ super() }}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-png">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-png">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/screen.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    {% block page_content %}{% endblock %}
-</div>
+    <div class="container-fluid navbar-fixed-top" style="padding: 0px">
+        {% block header %}{% endblock %}
+    </div>
+
+    <div class="container-fluid" style="padding: 0px">
+        {% block page_content %}{% endblock %}
+    </div>
+
+    <div>
+        {% block pop_window %}{% endblock %}
+    </div>
+
+    <div class="container-fluid" style="padding: 0px">
+        {% block footer %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script  type="text/javascript" src="{{ url_for('static', filename='js/public.js') }}"></script>
 {% endblock %}

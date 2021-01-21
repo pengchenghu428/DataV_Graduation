@@ -2,32 +2,58 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="13927326-724c-4f99-a78d-31d92bf2ccea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/finance_nation_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/finance_province_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/macro_nation_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/macro_province_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/own_amount_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/own_nation_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/realty_nation_month.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/realty_nation_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/realty_province_month.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/realty_province_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/sales_company_month.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/sales_company_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/sales_nation_month.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/sales_nation_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/sales_province_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/sales_type_month.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/raw/sales_type_year.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/DataV_Graduation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DataV_Graduation.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/file.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/plot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/screen.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/banner_bigdata.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/banner_lake.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/banner_sunset.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/banner_technology.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/danei.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/ic_all.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/ic_china.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/ic_classify.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/ic_company.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/ic_phone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/ic_return.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/ic_weixin.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/logo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/t_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/t_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/t_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/t_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/t_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/t_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/t_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/title.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/true.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/wx.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/public.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/404.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/500.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dscreen.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/components.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/echart_index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/macro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/nb_components.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/nb_jupyter_globe.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/nb_jupyter_lab.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/nb_jupyter_lab_tab.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/nb_jupyter_notebook.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/nb_jupyter_notebook_tab.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/nb_nteract.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/simple_chart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/simple_globe.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/simple_page.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/echarts/simple_tab.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/overview.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +79,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Flask Main" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -64,6 +93,7 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
@@ -71,19 +101,28 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/img" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\static\css" />
       <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\static" />
       <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\templates" />
+      <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\templates\echarts" />
+      <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\templates\js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\static\img" />
+      <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\static\css" />
+      <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\templates" />
+      <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\static" />
       <recent name="E:\WorkSpace\PyCharm\DataV_Graduation\data\raw" />
     </key>
   </component>
@@ -127,7 +166,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1610970555673</updated>
-      <workItem from="1610970557315" duration="10242000" />
+      <workItem from="1610970557315" duration="60528000" />
     </task>
     <task id="LOCAL-00001" summary="2021/01/18-&gt;pengchenghu: flask初始化">
       <created>1610970992701</created>
@@ -136,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610970992701</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="2021/01/19-&gt;pengchenghu: flask-Bootstrap测试">
+      <created>1611140773845</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611140773845</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,9 +201,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="2021/01/18-&gt;pengchenghu: flask初始化" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021/01/18-&gt;pengchenghu: flask初始化" />
+    <MESSAGE value="2021/01/19-&gt;pengchenghu: flask-Bootstrap测试" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021/01/19-&gt;pengchenghu: flask-Bootstrap测试" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/DataV_Graduation$DataV_Graduation.coverage" NAME="DataV_Graduation Coverage Results" MODIFIED="1610975147055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DataV_Graduation$DataV_Graduation.coverage" NAME="DataV_Graduation Coverage Results" MODIFIED="1611230281237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
