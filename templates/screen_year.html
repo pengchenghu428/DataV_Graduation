@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+
+{% block title %}ExcatorJarvis - DataScreen{% endblock %}
+
+{% block content %}
+    <div class="screen">
+        <!--header-->
+        <div class="header">
+            <div class="bg_header">
+                <div class="header_nav fl t_title">
+                    {{ params.cmode }}{{ params.cname }}挖掘机年销量分析预测平台</div>
+            </div>
+        </div>
+
+        <!--content-->
+        <div class="data_content">
+            <div class="data_header">
+                <!--时间戳-->
+                <div class="data_time">2021/1/22 上午11:55:59</div>
+                <div class="data_dimension_switch">切换月视图</div>
+            </div>
+
+            <div class="data_main">
+                <!--左侧部分-->
+                <div class="main_left fl" style="height: 750px">
+                    <div class="left_1 t_btn6" style="cursor: pointer; height: 350px">
+                        <!--左上边框-->
+                        <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i> </div>
+                        <!--右上边框-->
+                        <div class="t_line_box"> <i class="t_r_line"></i> <i class="r_t_line"></i> </div>
+                        <!--左下边框-->
+                        <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i> </div>
+                        <!--右下边框-->
+                        <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i> </div>
+                        <!--标题-->
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_own.png') }}" alt="">&nbsp;保有量信息
+                        </div>
+                        <!--图标-->
+                        <div id="chart_own" class="chart" style="width:100%; height: 350px;"></div>
+                    </div>
+                    <div class="left_2 t_btn6" style="cursor: pointer; height: 350px;">
+                        <!--左上边框-->
+                        <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i> </div>
+                        <!--右上边框-->
+                        <div class="t_line_box"> <i class="t_r_line"></i> <i class="r_t_line"></i> </div>
+                        <!--左下边框-->
+                        <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i> </div>
+                        <!--右下边框-->
+                        <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i></div>
+                        <!--标题-->
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_own.png') }}" alt="">&nbsp;房地产信息
+                        </div>
+                        <!--左右切换-->
+                        <img class="img_left realty_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right realty_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
+                        <div id="chart_realty" class="chart" style="width:100%; height: 350px;"></div>
+                    </div>
+                </div>
+
+                <!--中间部分-->
+                <div class="main_center fl">
+                    <div class="center_text" style="height: 180px">
+                        <!--左上边框-->
+                        <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i> </div>
+                        <!--右上边框-->
+                        <div class="t_line_box"> <i class="t_r_line"></i> <i class="r_t_line"></i> </div>
+                        <!--左下边框-->
+                        <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i> </div>
+                        <!--右下边框-->
+                        <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i> </div>
+                        <!--标题-->
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_stat1.png') }}" alt="">&nbsp;统计指标
+                        </div>
+
+                        <div class="info_items">
+                            <div class="info_item" style="">
+                                <!--左上边框-->
+                                <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i> </div>
+                                <!--右上边框-->
+                                <div class="t_line_box"> <i class="t_r_line"></i> <i class="r_t_line"></i> </div>
+                                <!--左下边框-->
+                                <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i> </div>
+                                <!--右下边框-->
+                                <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i> </div>
+                                <!--标题-->
+                                <div class="info_item_title">总数</div>
+                                <!--数字-->
+                                <div id="info_total" class="info_item_data"></div>
+                            </div>
+                            <div class="info_item" style="">
+                                <!--左上边框-->
+                                <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i> </div>
+                                <!--右上边框-->
+                                <div class="t_line_box"> <i class="t_r_line"></i> <i class="r_t_line"></i> </div>
+                                <!--左下边框-->
+                                <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i> </div>
+                                <!--右下边框-->
+                                <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i> </div>
+                                <!--标题-->
+                                <div class="info_item_title ">增长</div>
+                                <!--数字-->
+                                <div id="info_add" class="info_item_data"></div>
+                            </div>
+                            <div class="info_item" style="">
+                                <!--左上边框-->
+                                <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i> </div>
+                                <!--右上边框-->
+                                <div class="t_line_box"> <i class="t_r_line"></i> <i class="r_t_line"></i> </div>
+                                <!--左下边框-->
+                                <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i> </div>
+                                <!--右下边框-->
+                                <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i> </div>
+                                <!--标题-->
+                                <div class="info_item_title ">环比</div>
+                                <!--数字-->
+                                <div id="info_ratio" class="info_item_data"></div>
+                            </div>
+                            <div class="info_item" style="">
+                                <!--左上边框-->
+                                <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i> </div>
+                                <!--右上边框-->
+                                <div class="t_line_box"> <i class="t_r_line"></i> <i class="r_t_line"></i> </div>
+                                <!--左下边框-->
+                                <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i> </div>
+                                <!--右下边框-->
+                                <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i> </div>
+                                <!--标题-->
+                                <div class="info_item_title ">预测</div>
+                                <!--数字-->
+                                <div id="info_predict" class="info_item_data"></div>
+                            </div>
+                        </div>
+{#                        <div id="chart_info" style="width:100%;height:200px;">#}
+
+                    </div>
+
+                    <div class="center_text" style="height: 520px">
+                        <!--左上边框-->
+                        <div class="t_line_box"> <i class="t_l_line"></i> <i class="l_t_line"></i></div>
+                        <!--右上边框-->
+                        <div class="t_line_box"> <i class="t_r_line"></i><i class="r_t_line"></i></div>
+                        <!--左下边框-->
+                        <div class="t_line_box"> <i class="l_b_line"></i> <i class="b_l_line"></i></div>
+                        <!--右下边框-->
+                        <div class="t_line_box"> <i class="r_b_line"></i> <i class="b_r_line"></i> </div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_stat2.png') }}" alt="">&nbsp;销量分解
+                        </div>
+                        <div id="chart_seq" style="width:100%;height:500px;"></div>
+                    </div>
+                </div>
+
+                <!--右侧部分-->
+                <div class="main_right fr">
+                    <div class="right_1" style="height: 350px">
+                        <!--左上边框-->
+                        <div class="t_line_box">
+                            <i class="t_l_line"></i>
+                            <i class="l_t_line"></i>
+                        </div>
+                        <!--右上边框-->
+                        <div class="t_line_box">
+                            <i class="t_r_line"></i>
+                            <i class="r_t_line"></i>
+                        </div>
+                        <!--左下边框-->
+                        <div class="t_line_box">
+                            <i class="l_b_line"></i>
+                            <i class="b_l_line"></i>
+                        </div>
+                        <!--右下边框-->
+                        <div class="t_line_box">
+                            <i class="r_b_line"></i>
+                            <i class="b_r_line"></i>
+                        </div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;宏观经济信息
+                        </div>
+                        <div id="chart_macro" class="echart t_btn7" style="width:100%;height: 350px;"></div>
+                    </div>
+
+                    <div class="right_2" style="height: 350px">
+                        <!--左上边框-->
+                        <div class="t_line_box">
+                            <i class="t_l_line"></i>
+                            <i class="l_t_line"></i>
+                        </div>
+                        <!--右上边框-->
+                        <div class="t_line_box">
+                            <i class="t_r_line"></i>
+                            <i class="r_t_line"></i>
+                        </div>
+                        <!--左下边框-->
+                        <div class="t_line_box">
+                            <i class="l_b_line"></i>
+                            <i class="b_l_line"></i>
+                        </div>
+                        <!--右下边框-->
+                        <div class="t_line_box">
+                            <i class="r_b_line"></i>
+                            <i class="b_r_line"></i>
+                        </div>
+
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_finance.png') }}" alt="">&nbsp;财政支出信息
+                        </div>
+                        <div id="chart_finance" class="echart fl t_btn4" style="width:100%;height:350px;cursor: pointer;"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+
+    <script>
+        var HOST_URL = "http://10.193.0.20:5000";
+        var realty_idx = 0;
+        var realty_charts;
+        var realty_names = ['dev', 'price', 'investment', 'job'];
+
+        $(function(){
+            var metas = get_screen_params()
+            ownChart(metas);
+            realtyChart(metas);
+            infoChart(metas);
+        });
+
+        {#后台请求#}
+        function ownChart(metas){
+            var chart_own = echarts.init(document.getElementById('chart_own'), 'dark', {renderer: 'canvas'});
+             $.ajax({
+                type: "GET",
+                url: HOST_URL + "/year/ownChart/",
+                data: { mode: metas.mode, name: metas.name},
+                dataType: 'json',
+                success: function (result) {
+                    chart_own.setOption(result);
+                }
+            });
+         }
+
+        var chart_realty = echarts.init(document.getElementById('chart_realty'), 'dark', {renderer: 'canvas'});
+        function realtyChart(metas){
+            $.ajax({
+                type: "GET",
+                url: HOST_URL + "/year/realtyChart/",
+                data: { mode: metas.mode, name: metas.name},
+                dataType: 'json',
+                success: function (result) {
+                    realty_charts = result;
+                    var toptions = $.parseJSON((realty_charts[realty_names[realty_idx]]));
+                    chart_realty.setOption(toptions);
+                }
+            });
+
+        }
+        $(".realty_pre").click(function () {
+            realty_idx -= 1;
+            realty_idx = realty_idx % 4;
+            toptions = $.parseJSON((realty_charts[realty_names[realty_idx]]));
+            chart_realty.clear();
+            chart_realty.setOption(toptions);
+        })
+        $(".realty_next").click(function () {
+            realty_idx += 1;
+            realty_idx = realty_idx % 4;
+            var toptions = $.parseJSON((realty_charts[realty_names[realty_idx]]));
+            chart_realty.clear();
+            chart_realty.setOption(toptions);
+        })
+
+        function infoChart(metas){
+            $.ajax({
+                type: "GET",
+                url: HOST_URL + "/year/infoChart/",
+                data: { mode: metas.mode, name: metas.name},
+                dataType: 'json',
+                success: function (result) {
+                    $("#info_total").text(result['total']);
+                    $("#info_add").text(result['add']);
+                    $("#info_ratio").text(result['ratio'].toFixed(2) + "%");
+                    $("#info_predict").text(result['predict']);
+                }
+            });
+        }
+
+        function seqChart(metas){
+            var chart_seq = echarts.init(document.getElementById('chart_seq'), 'light', {renderer: 'canvas'});
+            $.ajax({
+                type: "GET",
+                url: HOST_URL + "/year/seqChart/",
+                dataType: 'json',
+                success: function (result) {
+                    chart_seq.setOption(result);
+                }
+            });
+        }
+
+        function macroChart(metas) {
+            var chart_macro = echarts.init(document.getElementById('chart_macro'), 'light', {renderer: 'canvas'});
+            $.ajax({
+                type: "GET",
+                url: HOST_URL + "/year/macroChart/",
+                dataType: 'json',
+                success: function (result) {
+                    chart_macro.setOption(result);
+                }
+            });
+        }
+
+        function financeChart(metas){
+            var chart_finance = echarts.init(document.getElementById('chart_finance'), 'light', {renderer: 'canvas'});
+            $.ajax({
+                type: "GET",
+                url: HOST_URL + "/year/financeChart",
+                dataType: 'json',
+                success: function (result) {
+                    chart_finance.setOption(result);
+                }
+            });
+        }
+
+        // 获取当前页面的参数
+	    function get_screen_params() {
+            var cur_url = window.location.href;
+            var metas = cur_url.split("/")
+            metas.pop()
+            metas.pop()
+            var name = metas.pop()
+            var mode = metas.pop()
+            return { 'mode': mode, 'name': name}
+	    }
+
+    </script>
+
+{% endblock %}
