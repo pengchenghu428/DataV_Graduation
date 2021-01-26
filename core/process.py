@@ -50,9 +50,12 @@ def extend_merge_nation_month(dfs):
 
     tdf = sales_df.copy()
     for df in [own_df, macro_df, realty_year_df, realty_month_df, finance_df]:
-        tdf = tdf.merge(df, on='year', how='left')
+        if 'month' in df.columns:
+            tdf = tdf.merge(df, on=['year', 'month'], how='left')
+        else:
+            tdf = tdf.merge(df, on=['year'], how='left')
 
-    tdf.sort_values(['year'], inplace=True, ignore_index=True)
+    tdf.sort_values(['year', 'month'], inplace=True, ignore_index=True)
     tdf['target'] = tdf['sales'].shift(-1)  # 标签构建
     return tdf
 
@@ -277,6 +280,7 @@ def diff_feats(tdf, levels=None, key=['year'], drop=False, avoid_cols=[]):
         tdf = pd.concat(dfs, ignore_index=True)
 
     return tdf
+
 
 # 序列特征抽取
 def extract_seq_feat(tdf, col, lags=3):

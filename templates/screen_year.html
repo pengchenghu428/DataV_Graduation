@@ -150,64 +150,49 @@
                         <div class="main_title">
                             <img src="{{ url_for('static', filename='img/ico_stat2.png') }}" alt="">&nbsp;销量分解
                         </div>
-                        <div id="chart_seq" style="width:100%;height:500px;"></div>
+                        <div id="chart_seq" class="chart" style="width:100%;height:520px;"></div>
                     </div>
                 </div>
 
                 <!--右侧部分-->
                 <div class="main_right fr">
-                    <div class="right_1" style="height: 350px">
+                    <div class="right_1 t_btn6" style="height: 350px">
                         <!--左上边框-->
-                        <div class="t_line_box">
-                            <i class="t_l_line"></i>
-                            <i class="l_t_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
                         <!--右上边框-->
-                        <div class="t_line_box">
-                            <i class="t_r_line"></i>
-                            <i class="r_t_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
                         <!--左下边框-->
-                        <div class="t_line_box">
-                            <i class="l_b_line"></i>
-                            <i class="b_l_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
                         <!--右下边框-->
-                        <div class="t_line_box">
-                            <i class="r_b_line"></i>
-                            <i class="b_r_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
                         <div class="main_title">
                             <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;宏观经济信息
                         </div>
-                        <div id="chart_macro" class="echart t_btn7" style="width:100%;height: 350px;"></div>
+                        <!--左右切换-->
+                        <img class="img_left macro_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right macro_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
+                        <div id="chart_macro" class="chart" style="width:100%; height: 350px;"></div>
                     </div>
 
-                    <div class="right_2" style="height: 350px">
+                    <div class="right_2 t_btn6" style="height: 350px">
                         <!--左上边框-->
-                        <div class="t_line_box">
-                            <i class="t_l_line"></i>
-                            <i class="l_t_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
                         <!--右上边框-->
-                        <div class="t_line_box">
-                            <i class="t_r_line"></i>
-                            <i class="r_t_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
                         <!--左下边框-->
-                        <div class="t_line_box">
-                            <i class="l_b_line"></i>
-                            <i class="b_l_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
                         <!--右下边框-->
-                        <div class="t_line_box">
-                            <i class="r_b_line"></i>
-                            <i class="b_r_line"></i>
-                        </div>
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
 
                         <div class="main_title">
                             <img src="{{ url_for('static', filename='img/ico_finance.png') }}" alt="">&nbsp;财政支出信息
                         </div>
+
+                        <!--左右切换-->
+                        <img class="img_left finance_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right finance_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
                         <div id="chart_finance" class="echart fl t_btn4" style="width:100%;height:350px;cursor: pointer;"></div>
                     </div>
 
@@ -226,13 +211,23 @@
         var realty_idx = 0;
         var realty_charts;
         var realty_names = ['dev', 'price', 'investment', 'job'];
+        var macro_idx = 0;
+        var macro_charts;
+        var macro_names = ['gdp', 'add'];
+        var finance_idx = 0;
+        var finance_charts;
+        var finance_names = ['pie', 'line'];
 
         $(function(){
             var metas = get_screen_params()
             ownChart(metas);
             realtyChart(metas);
             infoChart(metas);
+            seqChart(metas);
+            macroChart(metas);
+            financeChart(metas);
         });
+
 
         {#后台请求#}
         function ownChart(metas){
@@ -266,7 +261,7 @@
         $(".realty_pre").click(function () {
             realty_idx -= 1;
             realty_idx = realty_idx % 4;
-            toptions = $.parseJSON((realty_charts[realty_names[realty_idx]]));
+            var toptions = $.parseJSON((realty_charts[realty_names[realty_idx]]));
             chart_realty.clear();
             chart_realty.setOption(toptions);
         })
@@ -294,10 +289,11 @@
         }
 
         function seqChart(metas){
-            var chart_seq = echarts.init(document.getElementById('chart_seq'), 'light', {renderer: 'canvas'});
+            var chart_seq = echarts.init(document.getElementById('chart_seq'), 'dark', {renderer: 'canvas'});
             $.ajax({
                 type: "GET",
                 url: HOST_URL + "/year/seqChart/",
+                data: { mode: metas.mode, name: metas.name},
                 dataType: 'json',
                 success: function (result) {
                     chart_seq.setOption(result);
@@ -305,29 +301,63 @@
             });
         }
 
+        var chart_macro = echarts.init(document.getElementById('chart_macro'), 'dark', {renderer: 'canvas'});
         function macroChart(metas) {
-            var chart_macro = echarts.init(document.getElementById('chart_macro'), 'light', {renderer: 'canvas'});
             $.ajax({
                 type: "GET",
                 url: HOST_URL + "/year/macroChart/",
+                data: { mode: metas.mode, name: metas.name},
                 dataType: 'json',
                 success: function (result) {
-                    chart_macro.setOption(result);
+                    macro_charts = result;
+                    var toptions = $.parseJSON((macro_charts[macro_names[macro_idx]]));
+                    chart_macro.setOption(toptions);
                 }
             });
         }
+        $(".macro_pre").click(function () {
+            macro_idx -= 1;
+            macro_idx = macro_idx % 2;
+            var toptions = $.parseJSON((macro_charts[macro_names[macro_idx]]));
+            chart_macro.clear();
+            chart_macro.setOption(toptions);
+        })
+        $(".macro_next").click(function () {
+            macro_idx += 1;
+            macro_idx = macro_idx % 2;
+            var toptions = $.parseJSON((macro_charts[macro_names[macro_idx]]));
+            chart_macro.clear();
+            chart_macro.setOption(toptions);
+        })
 
+        var chart_finance = echarts.init(document.getElementById('chart_finance'), 'dark', {renderer: 'canvas'});
         function financeChart(metas){
-            var chart_finance = echarts.init(document.getElementById('chart_finance'), 'light', {renderer: 'canvas'});
             $.ajax({
                 type: "GET",
                 url: HOST_URL + "/year/financeChart",
+                data: { mode: metas.mode, name: metas.name},
                 dataType: 'json',
                 success: function (result) {
-                    chart_finance.setOption(result);
+                    finance_charts = result;
+                    var toptions = $.parseJSON((finance_charts[finance_names[finance_idx]]));
+                    chart_finance.setOption(toptions);
                 }
             });
         }
+        $(".finance_pre").click(function () {
+            finance_idx -= 1;
+            finance_idx = finance_idx % 2;
+            var toptions = $.parseJSON((finance_charts[finance_names[finance_idx]]));
+            chart_finance.clear();
+            chart_finance.setOption(toptions);
+        })
+        $(".finance_next").click(function () {
+            finance_idx += 1;
+            finance_idx = finance_idx % 2;
+            var toptions = $.parseJSON((finance_charts[finance_names[finance_idx]]));
+            chart_finance.clear();
+            chart_finance.setOption(toptions);
+        })
 
         // 获取当前页面的参数
 	    function get_screen_params() {
