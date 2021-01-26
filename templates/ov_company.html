@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}ExcatorJarvis - DataOverView{% endblock %}
+
+{% block content %}
+    <div class="screen">
+        <!--header-->
+        <div class="header">
+            <div class="bg_header">
+                <div class="header_nav fl t_title">分公司挖据机销量总览</div>
+            </div>
+        </div>
+
+        <!--content-->
+        <div class="data_content">
+            <!-- 底部链接块 -->
+
+            <!--顶部-->
+            <div class="data_header">
+                <div class="data_link">
+                    <ul>
+                        <li><span id="sy" style="padding-left: 20px;">三一</span></li></li>
+                        <li><span id="zl">中联</span></li></li>
+                        <li><span id="jbt">久保田</span></li></li>
+                        <li><span id="jc">京城</span></li></li>
+                        <li><span id="zhuy">住友</span></li></li>
+                        <li><span id="lbhe">利勃海尔</span></li></li>
+                        <li><span id="lsd">力士德</span></li></li>
+                        <li><span id="ktbl">卡特彼勒</span></li></li>
+                        <li><span id="ktzg">卡特重工</span></li></li>
+                        <li><span id="xg">厦工</span></li></li>
+                        <li><span id="xs">小松</span></li></li>
+                        <li><span id="sdlg">山东临工</span></li></li>
+                        <li><span id="shzn">山河智能</span></li></li>
+                        <li><span id="sz">山重</span></li></li>
+                        <li><span id="ky">开元</span></li></li>
+                        <li><span id="pp">彭浦</span></li></li>
+                        <li><span id="xw">徐挖</span></li></li>
+                        <li><span id="ds">斗山</span></li></li>
+                        <li><span id="rl">日立</span></li></li>
+                        <li><span id="lg">柳工</span></li></li>
+                        <li><span id="wew">沃尔沃</span></li></li>
+                        <li><span id="ym">洋马</span></li></li>
+                        <li><span id="yc">玉柴</span></li></li>
+                        <li><span id="xdjs">现代江苏</span></li></li>
+                        <li><span id="sg">神钢</span></li></li>
+                        <li><span id="ftlw">福田雷沃</span></li></li>
+                        <li><span id="yhde">约翰迪尔</span></li></li>
+                        <li><span id="zhany">詹阳</span></li></li>
+                    </ul>
+                </div>
+
+                <!--时间戳-->
+{#                <div class="data_time">2021/1/22 上午11:55:59</div>#}
+            </div>
+
+            <!--内容图表快 -->
+            <div class="data_main">
+                <!--左侧部分-->
+                <div class="main_left fl" style="width: 49%">
+                    <div class="left_1 t_btn6" style="height: 760px">
+                        <!--左上边框-->
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
+                        <!--右上边框-->
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
+                        <!--左下边框-->
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
+                        <!--右下边框-->
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;年销量视角
+                        </div>
+                        <!--左右切换-->
+                        <img class="img_left year_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right year_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
+                        <div id="chart_year" class="chart" style="width:100%; height: 760px;"></div>
+                    </div>
+                </div>
+                <!--右侧部分-->
+                <div class="main_right fr" style="width: 49%;">
+                    <div class="right_1 t_btn6" style="height: 760px">
+                        <!--左上边框-->
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
+                        <!--右上边框-->
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
+                        <!--左下边框-->
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
+                        <!--右下边框-->
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;月销量视角
+                        </div>
+                        <!--左右切换-->
+                        <img class="img_left month_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right month_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
+                        <div id="chart_month" class="chart" style="width:100%; height: 760px;"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+
+    <script>
+        var HOST_URL = "http://10.193.0.20:5000";
+        var year_idx = 0;
+        var year_charts;
+        var year_names = ['pie', 'line'];
+        var month_idx = 0;
+        var month_charts;
+        var month_names = ['pie', 'line'];
+
+        $(function(){
+            yearChart();
+            monthChart();
+        });
+
+
+        var chart_year = echarts.init(document.getElementById('chart_year'), 'dark', {renderer: 'canvas'});
+        function yearChart(){
+             $.ajax({
+                type: "GET",
+                url: HOST_URL + "/overview/year/",
+                data: { mode: 'company'},
+                dataType: 'json',
+                success: function (result) {
+                    year_charts = result;
+                    var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+                    chart_year.setOption(toptions);
+                }
+            });
+         }
+        $(".year_pre").click(function () {
+            year_idx -= 1;
+            year_idx = year_idx % 2;
+            var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+            chart_year.clear();
+            chart_year.setOption(toptions);
+        })
+        $(".year_next").click(function () {
+            year_idx += 1;
+            year_idx = year_idx % 2;
+            var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+            chart_year.clear();
+            chart_year.setOption(toptions);
+        })
+
+        var chart_month = echarts.init(document.getElementById('chart_month'), 'dark', {renderer: 'canvas'});
+        function monthChart(){
+             $.ajax({
+                type: "GET",
+                url: HOST_URL + "/overview/month/",
+                data: { mode: 'company'},
+                dataType: 'json',
+                success: function (result) {
+                    month_charts = result;
+                    var toptions = $.parseJSON((month_charts[month_names[month_idx]]));
+                    chart_month.setOption(toptions);
+                }
+            });
+         }
+        $(".month_pre").click(function () {
+            month_idx -= 1;
+            month_idx = month_idx % 2;
+            var toptions = $.parseJSON((month_charts[month_names[month_idx]]));
+            chart_month.clear();
+            chart_month.setOption(toptions);
+        })
+        $(".month_next").click(function () {
+            month_idx += 1;
+            month_idx = month_idx % 2;
+            var toptions = $.parseJSON((month_charts[month_names[month_idx]]));
+            chart_month.clear();
+            chart_month.setOption(toptions);
+        })
+
+        $("#sy").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/三一/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#zl").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/中联/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#jbt").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/久保田/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#jc").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/京城/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#zhuy").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/住友/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#lbhe").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/利勃海尔/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#lsd").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/力士德/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#ktbl").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/卡特彼勒/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#ktzg").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/卡特重工/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#xg").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/厦工/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#xs").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/小松/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#sdlg").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/山东临工/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#shzn").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/山河智能/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#sz").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/山重/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#ky").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/开元/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#pp").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/彭浦/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#xw").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/徐挖/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#ds").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/斗山/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#rl").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/日立/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#lg").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/柳工/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#wew").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/沃尔沃/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#ym").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/洋马/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#yc").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/玉柴/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#xdjs").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/现代江苏/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#sg").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/神钢/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#ftlw").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/福田雷沃/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#yhde").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/约翰迪尔/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#zy").click(function () {
+		    var new_url = HOST_URL + "/dscreen/company/詹阳/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}ExcatorJarvis - DataOverView{% endblock %}
+
+{% block content %}
+    <div class="screen">
+        <!--header-->
+        <div class="header">
+            <div class="bg_header">
+                <div class="header_nav fl t_title">分类型挖据机销量总览</div>
+            </div>
+        </div>
+
+        <!--content-->
+        <div class="data_content">
+            <!-- 底部链接块 -->
+
+            <!--顶部-->
+            <div class="data_header">
+                <div class="data_link">
+                    <ul>
+                        <li><span id="big" style="padding-left: 20px;">大型挖掘机</span></li></li>
+                        <li><span id="medium">中型挖掘机</span></li></li>
+                        <li><span id="small">小型挖掘机</span></li></li>
+                    </ul>
+                </div>
+
+                <!--时间戳-->
+{#                <div class="data_time">2021/1/22 上午11:55:59</div>#}
+            </div>
+
+            <!--内容图表快 -->
+            <div class="data_main">
+                <!--左侧部分-->
+                <div class="main_left fl" style="width: 49%">
+                    <div class="left_1 t_btn6" style="height: 760px">
+                        <!--左上边框-->
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
+                        <!--右上边框-->
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
+                        <!--左下边框-->
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
+                        <!--右下边框-->
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;年销量视角
+                        </div>
+                        <!--左右切换-->
+                        <img class="img_left year_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right year_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
+                        <div id="chart_year" class="chart" style="width:100%; height: 760px;"></div>
+                    </div>
+                </div>
+                <!--右侧部分-->
+                <div class="main_right fr" style="width: 49%;">
+                    <div class="right_1 t_btn6" style="height: 760px">
+                        <!--左上边框-->
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
+                        <!--右上边框-->
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
+                        <!--左下边框-->
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
+                        <!--右下边框-->
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;月销量视角
+                        </div>
+                        <!--左右切换-->
+                        <img class="img_left month_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right month_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
+                        <div id="chart_month" class="chart" style="width:100%; height: 760px;"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+
+    <script>
+        var HOST_URL = "http://10.193.0.20:5000";
+        var year_idx = 0;
+        var year_charts;
+        var year_names = ['pie', 'line'];
+        var month_idx = 0;
+        var month_charts;
+        var month_names = ['pie', 'line'];
+
+        $(function(){
+            yearChart();
+            monthChart();
+        });
+
+
+        var chart_year = echarts.init(document.getElementById('chart_year'), 'dark', {renderer: 'canvas'});
+        function yearChart(){
+             $.ajax({
+                type: "GET",
+                url: HOST_URL + "/overview/year/",
+                data: { mode: 'type'},
+                dataType: 'json',
+                success: function (result) {
+                    year_charts = result;
+                    var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+                    chart_year.setOption(toptions);
+                }
+            });
+         }
+        $(".year_pre").click(function () {
+            year_idx -= 1;
+            year_idx = year_idx % 2;
+            var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+            chart_year.clear();
+            chart_year.setOption(toptions);
+        })
+        $(".year_next").click(function () {
+            year_idx += 1;
+            year_idx = year_idx % 2;
+            var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+            chart_year.clear();
+            chart_year.setOption(toptions);
+        })
+
+        var chart_month = echarts.init(document.getElementById('chart_month'), 'dark', {renderer: 'canvas'});
+        function monthChart(){
+             $.ajax({
+                type: "GET",
+                url: HOST_URL + "/overview/month/",
+                data: { mode: 'type'},
+                dataType: 'json',
+                success: function (result) {
+                    month_charts = result;
+                    var toptions = $.parseJSON((month_charts[month_names[month_idx]]));
+                    chart_month.setOption(toptions);
+                }
+            });
+         }
+        $(".month_pre").click(function () {
+            month_idx -= 1;
+            month_idx = month_idx % 2;
+            var toptions = $.parseJSON((month_charts[month_names[month_idx]]));
+            chart_month.clear();
+            chart_month.setOption(toptions);
+        })
+        $(".month_next").click(function () {
+            month_idx += 1;
+            month_idx = month_idx % 2;
+            var toptions = $.parseJSON((month_charts[month_names[month_idx]]));
+            chart_month.clear();
+            chart_month.setOption(toptions);
+        })
+
+        $("#big").click(function () {
+		    var new_url = HOST_URL + "/dscreen/type/大/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#medium").click(function () {
+		    var new_url = HOST_URL + "/dscreen/type/中/year/"
+		    window.open(new_url, '_blank');
+        })
+        $("#small").click(function () {
+		    var new_url = HOST_URL + "/dscreen/type/小/year/"
+		    window.open(new_url, '_blank');
+        })
+
+    </script>
+
+{% endblock %}

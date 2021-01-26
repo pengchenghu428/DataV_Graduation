@@ -132,7 +132,7 @@ class DataLoader:
 
         tdf = self.data[mode][time_dimension]
 
-        if mode == 'nation':
+        if mode == 'nation' or not name:
             return tdf
 
         tdf = tdf.loc[tdf[mode]==name].copy()

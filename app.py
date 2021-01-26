@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 
 from core.match import match_screen_title
+from core.decode import url_decode
 from core.data import DataLoader
 from core.plot import *
 
@@ -36,10 +37,43 @@ def index():
     return render_template('index.html')
 
 
-# 总览页面
-@app.route('/overview/<mode>/')
-def overview(mode):
-    return render_template('overview.html')
+# 类型总览页面
+@app.route('/overview/type/')
+def type_overview():
+    return render_template('ov_type.html')
+
+# 省市总览页面
+@app.route('/overview/province/')
+def province_overview():
+    return render_template('ov_province.html')
+
+# 省市总览页面
+@app.route('/overview/company/')
+def company_overview():
+    return render_template('ov_company.html')
+
+# 年-总览页面
+@app.route('/overview/year/', methods=['GET', 'POST'])
+def year_overview():
+    mode = request.args.get('mode')
+    charts = plot_year_overview(data_loader, mode)
+    return charts
+
+
+# 年-总览页面
+@app.route('/map/province/', methods=['GET', 'POST'])
+def year_map_provinces():
+    # mode = request.args.get('mode')
+    chart = plot_year_province_map(data_loader)
+    return chart.dump_options_with_quotes()
+
+
+# 月-总览页面
+@app.route('/overview/month/', methods=['GET', 'POST'])
+def month_overview():
+    mode = request.args.get('mode')
+    charts = plot_month_overview(data_loader, mode)
+    return charts
 
 
 # 年数据大屏页面
@@ -58,6 +92,8 @@ def year_data_screen(mode, name):
 @app.route('/year/ownChart/', methods=['GET', 'POST'])
 def year_own_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     chart = plot_year_own_chart(data_loader, mode, name)
     return chart.dump_options_with_quotes()
 
@@ -65,6 +101,8 @@ def year_own_chart():
 @app.route('/year/realtyChart/', methods=['GET', 'POST'])
 def year_realty_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_year_realty_chart(data_loader, mode, name)
     return charts
 
@@ -72,6 +110,8 @@ def year_realty_chart():
 @app.route('/year/infoChart/', methods=['GET', 'POST'])
 def year_info_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_year_info_chart(data_loader, mode, name)
     return charts
 
@@ -79,6 +119,8 @@ def year_info_chart():
 @app.route('/year/seqChart/', methods=['GET', 'POST'])
 def year_seq_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     chart = plot_year_seq_chart(data_loader, mode, name)
     return chart.dump_options_with_quotes()
 
@@ -86,6 +128,8 @@ def year_seq_chart():
 @app.route('/year/macroChart/', methods=['GET', 'POST'])
 def year_macro_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_year_macro_chart(data_loader, mode, name)
     return charts
 
@@ -93,6 +137,8 @@ def year_macro_chart():
 @app.route('/year/financeChart/', methods=['GET', 'POST'])
 def year_finance_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_year_finance_chart(data_loader, mode, name)
     return charts
 
@@ -112,6 +158,8 @@ def month_data_screen(mode, name):
 @app.route('/month/ownChart/', methods=['GET', 'POST'])
 def month_own_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_month_own_chart(data_loader, mode, name)
     return charts.dump_options_with_quotes()
 
@@ -119,6 +167,8 @@ def month_own_chart():
 @app.route('/month/realtyChart/', methods=['GET', 'POST'])
 def month_realty_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_month_realty_chart(data_loader, mode, name)
     return charts
 
@@ -126,6 +176,8 @@ def month_realty_chart():
 @app.route('/month/infoChart/', methods=['GET', 'POST'])
 def month_info_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_month_info_chart(data_loader, mode, name)
     return charts
 
@@ -133,6 +185,8 @@ def month_info_chart():
 @app.route('/month/seqChart/', methods=['GET', 'POST'])
 def month_seq_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     chart = plot_month_seq_chart(data_loader, mode, name)
     return chart.dump_options_with_quotes()
 
@@ -141,6 +195,8 @@ def month_seq_chart():
 @app.route('/month/macroChart/', methods=['GET', 'POST'])
 def month_macro_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_month_macro_chart(data_loader, mode, name)
     return charts
 
@@ -149,9 +205,12 @@ def month_macro_chart():
 @app.route('/month/financeChart/', methods=['GET', 'POST'])
 def month_finance_chart():
     mode, name = request.args.get('mode'), request.args.get('name')
+    if mode != 'nation':
+        name = url_decode(name)
     charts = plot_month_finance_chart(data_loader, mode, name)
     return charts
 
 
 if __name__ == "__main__":
+    app.config['JSON_AS_ASCII'] = False
     app.run()

@@ -19,6 +19,5 @@ def match_screen_title(mode, name):
     if mode == 'nation':
         return "全国", ""
 
-    if mode == "type":
-        return "", name
+    return "", name
 

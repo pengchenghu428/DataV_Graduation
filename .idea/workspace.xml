@@ -2,13 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="13927326-724c-4f99-a78d-31d92bf2ccea" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/core/decode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ov_company.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ov_province.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/match.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/match.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/plot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/process.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/process.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/screen.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/screen.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/screen_month.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/screen_month.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/overview.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ov_type.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/screen_year.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/screen_year.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,7 +62,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/js" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -178,7 +183,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610970555673</updated>
       <workItem from="1610970557315" duration="84384000" />
-      <workItem from="1611404062114" duration="57985000" />
+      <workItem from="1611404062114" duration="75351000" />
     </task>
     <task id="LOCAL-00001" summary="2021/01/18-&gt;pengchenghu: flask初始化">
       <created>1610970992701</created>
@@ -208,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611536862811</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="2021/01/26-&gt;pengchenghu: 年销量数据大屏、月销量数据大屏完成">
+      <created>1611631674009</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1611631674009</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,11 +244,12 @@
     <MESSAGE value="2021/01/19-&gt;pengchenghu: flask-Bootstrap测试" />
     <MESSAGE value="2021/01/21-&gt;pengchenghu: 数据大屏页面框架搭建" />
     <MESSAGE value="2021/01/21-&gt;pengchenghu: 年销量数据大屏-前3模块" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021/01/21-&gt;pengchenghu: 年销量数据大屏-前3模块" />
+    <MESSAGE value="2021/01/26-&gt;pengchenghu: 年销量数据大屏、月销量数据大屏完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021/01/26-&gt;pengchenghu: 年销量数据大屏、月销量数据大屏完成" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DataV_Graduation$data.coverage" NAME="data Coverage Results" MODIFIED="1611304466235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
     <SUITE FILE_PATH="coverage/DataV_Graduation$async.coverage" NAME="async Coverage Results" MODIFIED="1611299154892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/core" />
-    <SUITE FILE_PATH="coverage/DataV_Graduation$DataV_Graduation.coverage" NAME="DataV_Graduation Coverage Results" MODIFIED="1611630558748" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DataV_Graduation$DataV_Graduation.coverage" NAME="DataV_Graduation Coverage Results" MODIFIED="1611663748709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -67,6 +67,7 @@ def extend_merge_type_year(dfs):
     sales_nation_df = diff_feats(sales_nation_df, levels=None, key=['year'], drop=False, avoid_cols=[])
     sales_type_df = diff_feats(sales_type_df, levels='type', key=['year'], drop=False, avoid_cols=[])
     own_df = diff_feats(own_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    macro_df = diff_feats(macro_df, levels=None, key=['year'], drop=False, avoid_cols=[])
     realty_df = diff_feats(realty_df, levels=None, key=['year'], drop=False, avoid_cols=[])
     finance_df = diff_feats(finance_df, levels=None, key=['year'], drop=False, avoid_cols=[])
 
@@ -130,13 +131,13 @@ def extend_merge_province_year(dfs):
     sales_nation_year_df = diff_feats(sales_nation_year_df, levels=None, key=['year'], drop=False, avoid_cols=[])
     sales_province_year_df = diff_feats(sales_province_year_df, levels='province', key=['year'], drop=False,
                                         avoid_cols=[])
-    own_df = diff_feats(own_df, levels=None, key=['year'], drop=True, avoid_cols=[])
-    macro_nation_df = diff_feats(macro_nation_df, levels=None, key=['year'], drop=True, avoid_cols=[])
-    macro_province_df = diff_feats(macro_province_df, levels='province', key=['year'], drop=True, avoid_cols=[])
-    realty_nation_df = diff_feats(realty_nation_df, levels=None, key=['year'], drop=True, avoid_cols=[])
-    realty_province_df = diff_feats(realty_province_df, levels='province', key=['year'], drop=True, avoid_cols=[])
-    finance_nation_df = diff_feats(finance_nation_df, levels=None, key=['year'], drop=True, avoid_cols=[])
-    finance_province_df = diff_feats(finance_province_df, levels='province', key=['year'], drop=True, avoid_cols=[])
+    own_df = diff_feats(own_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    macro_nation_df = diff_feats(macro_nation_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    macro_province_df = diff_feats(macro_province_df, levels='province', key=['year'], drop=False, avoid_cols=[])
+    realty_nation_df = diff_feats(realty_nation_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    realty_province_df = diff_feats(realty_province_df, levels='province', key=['year'], drop=False, avoid_cols=[])
+    finance_nation_df = diff_feats(finance_nation_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    finance_province_df = diff_feats(finance_province_df, levels='province', key=['year'], drop=False, avoid_cols=[])
 
     # 数据拼接
     sales_df = pd.merge(left=sales_province_year_df, right=sales_nation_year_df, on=['year'], how='left',
@@ -168,10 +169,10 @@ def extend_merge_company_year(dfs):
     # 数据差分
     sales_nation_year_df = diff_feats(sales_nation_year_df, levels=None, key=['year'], drop=False, avoid_cols=[])
     sales_company_year_df = diff_feats(sales_company_year_df, levels='company', key=['year'], drop=False, avoid_cols=[])
-    own_df = diff_feats(own_df, levels=None, key=['year'], drop=True, avoid_cols=[])
-    macro_nation_df = diff_feats(macro_nation_df, levels=None, key=['year'], drop=True, avoid_cols=[])
-    realty_nation_df = diff_feats(realty_nation_df, levels=None, key=['year'], drop=True, avoid_cols=[])
-    finance_nation_df = diff_feats(finance_nation_df, levels=None, key=['year'], drop=True, avoid_cols=[])
+    own_df = diff_feats(own_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    macro_nation_df = diff_feats(macro_nation_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    realty_nation_df = diff_feats(realty_nation_df, levels=None, key=['year'], drop=False, avoid_cols=[])
+    finance_nation_df = diff_feats(finance_nation_df, levels=None, key=['year'], drop=False, avoid_cols=[])
 
     # 数据拼接
     sales_df = pd.merge(left=sales_company_year_df, right=sales_nation_year_df, on=['year'], how='left',
@@ -221,12 +222,12 @@ def extend_merge_company_month(dfs):
     sales_company_month_df = extract_seq_feats(sales_company_month_df, 'sales', lags=lags, levels='company')
 
     # 其他通用特征
-    own_df = diff_feats(own_df, key=['year'], drop=True)
-    macro_df = diff_feats(macro_nation_df, key=['year'], drop=True)
-    realty_year_df = diff_feats(realty_nation_year_df, key=['year'], drop=True, avoid_cols=[])
-    realty_month_df = diff_feats(realty_nation_month_df, key=['year', 'month'], drop=True,
+    own_df = diff_feats(own_df, key=['year'], drop=False)
+    macro_df = diff_feats(macro_nation_df, key=['year'], drop=False)
+    realty_year_df = diff_feats(realty_nation_year_df, key=['year'], drop=False, avoid_cols=[])
+    realty_month_df = diff_feats(realty_nation_month_df, key=['year', 'month'], drop=False,
                                  avoid_cols=['roadwork_area_rise', 'new_area_rise', 'complete_area_rise'])
-    finance_df = diff_feats(finance_nation_df, key=['year'], drop=True, avoid_cols=[])
+    finance_df = diff_feats(finance_nation_df, key=['year'], drop=False, avoid_cols=[])
 
     # 数据拼接
     trn_df = sales_company_month_df.copy()
@@ -246,6 +247,7 @@ def extend_merge_company_month(dfs):
     trn_df['target'] = trn_df.groupby('company')[['sales']].shift(-1)  # 标签构建
     trn_df.sort_values(['year', 'month', 'company'], inplace=True)
     return trn_df
+
 
 
 # 数据汇总

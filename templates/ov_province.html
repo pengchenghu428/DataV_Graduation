@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+
+{% block title %}ExcatorJarvis - DataOverView{% endblock %}
+
+{% block content %}
+    <div class="screen">
+        <!--header-->
+        <div class="header">
+            <div class="bg_header">
+                <div class="header_nav fl t_title">分省市挖据机销量总览</div>
+            </div>
+        </div>
+
+        <!--content-->
+        <div class="data_content">
+            <!-- 底部链接块 -->
+
+            <!--顶部-->
+            <div class="data_header">
+                <div class="data_link">
+                    <ul>
+                        <li><span id="shanghai" style="padding-left: 20px;">上海</span></li></li>
+                        <li><span id="yunnan">云南</span></li></li>
+                        <li><span id="neimenggu">内蒙古</span></li></li>
+                        <li><span id="beijing">北京</span></li></li>
+                        <li><span id="jilin">吉林</span></li></li>
+                        <li><span id="sichuan">四川</span></li></li>
+                        <li><span id="tianjing">天津</span></li></li>
+                        <li><span id="ningxia">宁夏</span></li></li>
+                        <li><span id="anhui">安徽</span></li></li>
+                        <li><span id="shandong">山东</span></li></li>
+                        <li><span id="shanxi">山西</span></li></li>
+                        <li><span id="guangdong">广东</span></li></li>
+                        <li><span id="guangxi">广西</span></li></li>
+                        <li><span id="xinjiang">新疆</span></li></li>
+                        <li><span id="jiangsu">江苏</span></li></li>
+                        <li><span id="jiangxi">江西</span></li></li>
+                        <li><span id="hebei">河北</span></li></li>
+                        <li><span id="henan">河南</span></li></li>
+                        <li><span id="zhejiang">浙江</span></li></li>
+                        <li><span id="hainan">海南</span></li></li>
+                        <li><span id="hubei">湖北</span></li></li>
+                        <li><span id="hunan">湖南</span></li></li>
+                        <li><span id="gansu">甘肃</span></li></li>
+                        <li><span id="fujian">福建</span></li></li>
+                        <li><span id="xizang">西藏</span></li></li>
+                        <li><span id="guizou">贵州</span></li></li>
+                        <li><span id="liaoning">辽宁</span></li></li>
+                        <li><span id="chongqing">重庆</span></li></li>
+                        <li><span id="shanxi_3">陕西</span></li></li>
+                        <li><span id="qinghai">青海</span></li></li>
+                        <li><span id="heilongjiang">黑龙江</span></li></li>
+                    </ul>
+                </div>
+
+                <!--时间戳-->
+{#                <div class="data_time">2021/1/22 上午11:55:59</div>#}
+            </div>
+
+            <!--内容图表快 -->
+            <div class="data_main">
+                <!--左侧部分-->
+                <div class="main_left fl" style="width: 49%">
+                    <div class="left_1 t_btn6" style="height: 760px">
+                        <!--左上边框-->
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
+                        <!--右上边框-->
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
+                        <!--左下边框-->
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
+                        <!--右下边框-->
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;年销量视角
+                        </div>
+                        <!--左右切换-->
+                        <img class="img_left year_pre" src="{{ url_for('static', filename='img/ic_left.png') }}">
+                        <img class="img_right year_next" src="{{ url_for('static', filename='img/ic_right.png') }}">
+                        <!--图表-->
+                        <div id="chart_year" class="chart" style="width:100%; height: 760px;"></div>
+                    </div>
+                </div>
+                <!--右侧部分-->
+                <div class="main_right fr" style="width: 49%;">
+                    <div class="right_1 t_btn6" style="height: 760px">
+                        <!--左上边框-->
+                        <div class="t_line_box"><i class="t_l_line"></i><i class="l_t_line"></i></div>
+                        <!--右上边框-->
+                        <div class="t_line_box"><i class="t_r_line"></i><i class="r_t_line"></i></div>
+                        <!--左下边框-->
+                        <div class="t_line_box"><i class="l_b_line"></i><i class="b_l_line"></i></div>
+                        <!--右下边框-->
+                        <div class="t_line_box"><i class="r_b_line"></i><i class="b_r_line"></i></div>
+                        <div class="main_title">
+                            <img src="{{ url_for('static', filename='img/ico_macro.png') }}" alt="">&nbsp;月销量视角
+                        </div>
+                        <!--图表-->
+                        <div id="chart_map" class="chart" style="width:100%; height: 760px;"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script  type="text/javascript" src="{{ url_for('static', filename='js/china.js') }}"></script>
+    <script>
+        var HOST_URL = "http://10.193.0.20:5000";
+        var year_idx = 0;
+        var year_charts;
+        var year_names = ['pie', 'line'];
+
+        $(function(){
+            yearChart();
+            mapChart();
+        });
+
+
+        var chart_year = echarts.init(document.getElementById('chart_year'), 'dark', {renderer: 'canvas'});
+        function yearChart(){
+             $.ajax({
+                type: "GET",
+                url: HOST_URL + "/overview/year/",
+                data: { mode: 'province'},
+                dataType: 'json',
+                success: function (result) {
+                    year_charts = result;
+                    var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+                    chart_year.setOption(toptions);
+                }
+            });
+         }
+        $(".year_pre").click(function () {
+            year_idx -= 1;
+            year_idx = year_idx % 2;
+            var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+            chart_year.clear();
+            chart_year.setOption(toptions);
+        })
+        $(".year_next").click(function () {
+            year_idx += 1;
+            year_idx = year_idx % 2;
+            var toptions = $.parseJSON((year_charts[year_names[year_idx]]));
+            chart_year.clear();
+            chart_year.setOption(toptions);
+        })
+
+        function mapChart(){
+            var chart_map = echarts.init(document.getElementById('chart_map'), 'dark', {renderer: 'canvas'});
+             $.ajax({
+                type: "GET",
+                url: HOST_URL + "/map/province/",
+                data: { mode: 'province'},
+                dataType: 'json',
+                success: function (result) {
+                    chart_map.setOption(result);
+                }
+            });
+         }
+
+        $("#shanghai").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/上海/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#yunnan").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/云南/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#neimenggu").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/内蒙古/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#beijing").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/北京/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#jilin").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/吉林/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#sichuan").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/四川/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#tianjing").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/天津/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#ningxia").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/宁夏/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#anhui").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/安徽/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#shandong").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/山东/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#shanxi").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/山西/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#guangdong").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/广东/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#guangxi").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/广西/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#xinjiang").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/新疆/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#jiangsu").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/江苏/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#jiangxi").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/江西/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#hebei").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/河北/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#henan").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/河南/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#zhejiang").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/浙江/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#hainan").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/海南/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#hubei").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/湖北/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#hunan").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/湖南/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#gansu").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/甘肃/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#fujian").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/福建/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#xizang").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/西藏/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#guizou").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/贵州/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#liaoning").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/辽宁/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#chongqing").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/重庆/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#shanxi_3").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/陕西/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#qinghai").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/青海/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+        $("#heilongjiang").click(function () {
+		    var new_url = HOST_URL + "/dscreen/province/黑龙江/year/"
+		    window.open(encodeURI(new_url), '_blank');
+        })
+
+    </script>
+
+
+
+{% endblock %}

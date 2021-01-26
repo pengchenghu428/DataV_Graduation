@@ -12,8 +12,9 @@ import datetime
 import pandas as pd
 import numpy as np
 from pyecharts import options as opts
-from pyecharts.charts import Bar, Line, Pie
+from pyecharts.charts import Bar, Line, Pie, Map
 from pyecharts.charts import Timeline, Grid
+from pyecharts.globals import ThemeType
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 
@@ -1410,6 +1411,194 @@ def plot_month_finance_chart(data_loader, mode, name):
     charts = {
         'pie': fin_pie().dump_options_with_quotes(),
         'line': fin_line().dump_options_with_quotes()
+    }
+
+    return charts
+
+
+# 分类型年挖掘机销量总览
+def plot_year_overview(data_loader, mode):
+    df = data_loader.get_data(mode, 'year', '')
+
+    cols = ['year', 'sales', mode]
+    tdf = df[cols].copy()
+
+    x_data = df['year'].unique().astype(str).tolist()
+    types = tdf[mode].unique().tolist()
+
+    def pie_chart():
+        tl = Timeline()
+        for i, year in enumerate(x_data):
+            data = tdf.loc[tdf['year'] == int(year), 'sales'].tolist()
+            data = [[types[idx], data[idx]] for idx in range(len(types))]
+
+            pie = (
+                Pie()
+                    .add(
+                    "市场份额",
+                    data,
+                    rosetype='radius',
+                    radius=["20%", "55%"],
+                )
+                    .set_global_opts(
+                    title_opts=opts.TitleOpts("{}市场份额".format(year)),
+                    legend_opts=opts.LegendOpts(pos_top="5%"),
+                )
+            )
+            tl.add(pie, "{}年".format(year))
+        return tl
+
+    def line_chart():
+        line = Line()
+        line.add_xaxis(xaxis_data=x_data)
+
+        for i, ctype in enumerate(types):
+            line.add_yaxis(
+                series_name=ctype,
+                stack="sales",
+                y_axis=tdf.loc[tdf[mode] == ctype, 'sales'].tolist(),
+                areastyle_opts=opts.AreaStyleOpts(opacity=0.5),
+                label_opts=opts.LabelOpts(is_show=False))
+        line.set_global_opts(
+            xaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
+            yaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
+            title_opts=opts.TitleOpts(title="年销量"),
+            legend_opts=opts.LegendOpts(pos_top="5%"),
+            tooltip_opts=opts.TooltipOpts(trigger="axis", axis_pointer_type="cross"),
+        )
+        return line
+
+    pie = pie_chart()
+    line = line_chart()
+
+    # tab = Tab()
+    # tab.add(pie, 'PIE')
+    # tab.add(line, 'LINE')
+    # tab.add(triver, 'TRIVER')
+
+    charts = {
+        'pie': pie.dump_options_with_quotes(),
+        'line': line.dump_options_with_quotes()
+    }
+
+    return charts
+
+
+# 分类型年挖掘机销量总览
+def plot_year_province_map(data_loader):
+    df = data_loader.get_data('province', 'year', '')
+    cols = ['year', 'sales', 'province']
+    tdf = df[cols].copy()
+
+    x_data = df['year'].unique().astype(str).tolist()
+    types = tdf['province'].unique().tolist()
+
+    def map_chart():
+        tl = Timeline(init_opts=opts.InitOpts(theme=ThemeType.DARK))
+        for i, year in enumerate(x_data):
+            data = tdf.loc[tdf['year'] == int(year), 'sales'].tolist()
+            data = [[types[idx], data[idx]] for idx in range(len(types))]
+
+            map_chart = (
+                Map().add(
+                    series_name="销量",
+                    maptype='china',
+                    is_selected=True,
+                    data_pair=data,
+                    label_opts=opts.LabelOpts(is_show=False),
+                    is_map_symbol_show=False,
+                ).set_global_opts(
+                    title_opts=opts.TitleOpts(
+                        title="2009-2018年各省市销量",
+                        subtitle="单位：个", ),
+                    legend_opts=opts.LegendOpts(pos_top="5%"),
+                    visualmap_opts=opts.VisualMapOpts(
+                        is_calculable=True,
+                        pos_left="10",
+                        pos_top="center",
+                        range_text=["High", "Low"],
+                        range_color=["lightskyblue", "yellow", "orangered"],
+                        textstyle_opts=opts.TextStyleOpts(color="#ddd"),
+                        min_=100,
+                        max_=16000,
+                    ),
+                )
+
+            )
+
+            tl.add(map_chart, "{}年".format(year))
+        return tl
+
+    cmap = map_chart()
+
+    return cmap
+
+
+# 分类型月挖掘机销量总览
+def plot_month_overview(data_loader, mode):
+    df = data_loader.get_data(mode, 'month', '')
+
+    cols = ['year', 'month', 'sales', mode]
+    tdf = df[cols].copy()
+    tdf['dt'] = df[['year', 'month']].apply(lambda x: "{}-{:0>2d}".format(x[0], x[1]), axis=1)
+
+    x_data = tdf['dt'].unique().tolist()
+    types = tdf[mode].unique().tolist()
+
+    def pie_chart():
+        tl = Timeline()
+        for i, dt in enumerate(x_data):
+            year, month = dt[:4], dt[5:]
+            data = tdf.loc[tdf['dt'] == dt, 'sales'].tolist()
+            data = [[types[idx], data[idx]] for idx in range(len(types))]
+
+            pie = (
+                Pie()
+                    .add(
+                    "市场份额",
+                    data,
+                    rosetype='radius',
+                    radius=["20%", "55%"],
+                )
+                    .set_global_opts(
+                    title_opts=opts.TitleOpts("{}市场份额".format(dt)),
+                    legend_opts=opts.LegendOpts(pos_top="5%"),
+                )
+            )
+            tl.add(pie, "{}年{}月".format(year, month))
+        return tl
+
+    def line_chart():
+        line = Line()
+        line.add_xaxis(xaxis_data=x_data)
+
+        for i, ctype in enumerate(types):
+            line.add_yaxis(
+                series_name=ctype,
+                stack="sales",
+                y_axis=tdf.loc[tdf[mode] == ctype, 'sales'].tolist(),
+                areastyle_opts=opts.AreaStyleOpts(opacity=0.5),
+                label_opts=opts.LabelOpts(is_show=False))
+        line.set_global_opts(
+            xaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
+            yaxis_opts=opts.AxisOpts(splitline_opts=opts.SplitLineOpts(is_show=True)),
+            title_opts=opts.TitleOpts(title="月销量"),
+            legend_opts=opts.LegendOpts(pos_top="5%"),
+            tooltip_opts=opts.TooltipOpts(trigger="axis", axis_pointer_type="cross"),
+            datazoom_opts=opts.DataZoomOpts(type_="inside"),
+        )
+        return line
+
+    pie = pie_chart()
+    line = line_chart()
+
+    # tab = Tab()
+    # tab.add(pie, 'PIE')
+    # tab.add(line, 'LINE')
+
+    charts = {
+        'pie': pie.dump_options_with_quotes(),
+        'line': line.dump_options_with_quotes()
     }
 
     return charts
